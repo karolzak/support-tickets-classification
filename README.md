@@ -76,6 +76,7 @@ In this repository we will focus only on AML Workbench and Python scripts used t
 ![](docs/sample_data.jpg)
 - After evaluating the data in AML Workbench we quickly discovered that distribution of values for most of columns we wanted to classify is strongly unbalanced with some of the unique values represented by even as low as 1-2 samples. There are [multiple technics](https://shiring.github.io/machine_learning/2017/04/02/unbalanced) to deal with that kind of issues but due to limited amount of time for this POC we were not able to test them in action.   
 - Distribution of values for each column:
+
     ticket_type   |  business_service
     :-------------------------:|:-------------------------:
     ![](docs/value_count_ticket_type.jpg) | ![](docs/value_count_business_service.jpg) 
