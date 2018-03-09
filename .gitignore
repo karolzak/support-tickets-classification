@@ -99,3 +99,9 @@ ENV/
 
 # mypy
 .mypy_cache/
+
+# excluding datasets and models
+*.csv
+*.model
+.vscode
+
