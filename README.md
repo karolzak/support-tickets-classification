@@ -4,13 +4,13 @@
     2.1. [Main challenge and initial assumptions](#21-main-challenge-and-initial-assumptions)  
     2.2. [Dataset](#22-dataset)  
     2.3. [Training and evaluation results](#23-training-and-evaluation-results)    
-    2.4. [Using the model](#24-using-the-model)
-<!--
-3. [Run sample](#3-run-sample)  
-    3.1. [Setup](#31-setup)  
+    2.4. [Model deployment and usage](#24-model-deployment-and-usage)
+3. [Run the example](#3-run-the-example)  
+    3.1. [Prerequisites](#31-prerequisites)  
     3.2. [Train and evaluate the model](#32-train-and-evaluate-the-model)  
+    3.3. [Deploy web service](#33-deploy-web-service)
 4. [Code highlights](#4-code-highlights)  
--->
+
 <br>
 
 # 1. Project description 
@@ -25,16 +25,14 @@ Our combined team tried 3 different approaches to tackle this challenge using:
 
 In this repository we will focus only on AML Workbench and Python scripts used to solve this challenge.
 
-<br>
 
 #### What will you find inside:     #### 
 - How to clean and prepare text data and featurize it to make it valuable for machine learning scenarios
 - How to strip the data from any sensitive information and also anonymize/encrypt it
 - How to create a classification model using Python modules like: [sklearn](http://scikit-learn.org/stable/), [nltk](https://www.nltk.org/), [matplotlib](https://matplotlib.org/), [pandas](https://pandas.pydata.org/)
 - How to create a web service with a trained model and deploy it to Azure
-- How to leverage Azure Machine Learning Services and AML Workbench to make working on ML projects easier, faster and much more efficient
+- How to leverage [Azure Machine Learning Services](https://azure.microsoft.com/en-us/services/machine-learning-services/) and [AML Workbench](https://docs.microsoft.com/en-us/azure/machine-learning/preview/quickstart-installation) to make working on ML projects easier, faster and much more efficient
 
-<br>
 
 #### The team: ####
 - [Karol Żak](https://twitter.com/karolzak13) ([GitHub](https://github.com/karolzak)) - Software Development Engineer, Microsoft
@@ -71,11 +69,17 @@ In this repository we will focus only on AML Workbench and Python scripts used t
 ## 2.2. Dataset ##    
 [[back to the top]](#table-of-contents)
 
-- For the sake of this repository, data have been stripped out of any sensitive information and anonymized (encrypted). In the original solution we worked on a full dataset without any encryptions. You can download anonymized dataset [here](https://privdatastorage.blob.core.windows.net/github/support-tickets-classification/datasets/all_tickets.csv)
-- Example of anonymized and preprocessed data from AML Workbench view:
+- For the sake of this repository, data have been stripped out of any sensitive information and anonymized (encrypted). In the original solution we worked on a full dataset without any encryptions. You can download anonymized dataset from [here](https://privdatastorage.blob.core.windows.net/github/support-tickets-classification/datasets/all_tickets.csv).
+
+- Example of anonymized and preprocessed data from [AML Workbench](https://docs.microsoft.com/en-us/azure/machine-learning/preview/quickstart-installation) view:  
 ![](docs/sample_data.jpg)
+
+- AML Workbench gives some [powerfull and easy to use tools for data preparation](https://docs.microsoft.com/en-us/azure/machine-learning/preview/tutorial-bikeshare-dataprep). And bellow you can see a sample data transformation flow we used while preparing our dataset:  
+![](docs/data_steps.jpg)
+
 - After evaluating the data in AML Workbench we quickly discovered that distribution of values for most of columns we wanted to classify is strongly unbalanced with some of the unique values represented by even as low as 1-2 samples. There are [multiple technics](https://shiring.github.io/machine_learning/2017/04/02/unbalanced) to deal with that kind of issues but due to limited amount of time for this POC we were not able to test them in action.   
-- Distribution of values for each column:
+
+- Distribution of values for each column:  
 
     ticket_type   |  business_service
     :-------------------------:|:-------------------------:
@@ -99,7 +103,7 @@ In this repository we will focus only on AML Workbench and Python scripts used t
 ## 2.3. Training and evaluation results ##
 [[back to the top]](#table-of-contents)
 
-In order to train our models, we used AML Workbench to run training jobs with different parameters and then compared the results and picked the one with the best values:
+In order to train our models, we used [AML Workbench](https://docs.microsoft.com/en-us/azure/machine-learning/preview/quickstart-installation) and [Azure Machine Learning Services](https://azure.microsoft.com/en-us/services/machine-learning-services/) to run training jobs with different parameters and then compare the results and pick up the one with the best values.:
 
 ![](docs/workbench_runs_1.jpg)
 
@@ -108,7 +112,7 @@ To train models we tested 2 different algorithms: [SVM](http://scikit-learn.org/
 Below you can find some of the results of models we trained to predict different properties:
 
 - ### **ticket_type** ###    
-    We started from predicting the least unbalanced (and most important from Endavas business point of view) parameter which is `ticket_type` and after training the model and finding the best hyperparameters using [GridSearchSV](http://scikit-learn.org/stable/modules/generated/sklearn.model_selection.GridSearchCV.html) (which improved precision and recall by around 4%), we were able to achieve some really good results which you can see below:
+    We started from predicting the least unbalanced (and most important from Endavas business point of view) parameter which is `ticket_type` and after training the model and finding the best hyperparameters using [GridSearchCV](http://scikit-learn.org/stable/modules/generated/sklearn.model_selection.GridSearchCV.html) (which improved precision and recall by around 4%), we were able to achieve some really good results which you can see below:
 
 <div>
 <div style="float:left"><img src="docs/score_ticket_type.png"></div>
@@ -230,7 +234,7 @@ avg / total       0.78      0.84      0.79      9737
 
 <br>
 
-## 2.4. Using the model ##
+## 2.4. Model deployment and usage ##
 [[back to the top]](#table-of-contents)
 
 Final model will be used in form of a web service running on Azure and that's why we prepared a sample RESTful web service written in Python and using [Flask module](http://flask.pocoo.org/). This web service makes use of our trained model and provides API which accepts email body (text) and returns predicted properties.
@@ -243,11 +247,8 @@ The project we based our service on with code and all the deployment scripts can
 
 <br>
 
-
-<!---
-
-# 3. Run sample
-### 3.1. Setup
+# 3. Run the example
+## 3.1. Prerequisites
 [[back to the top]](#table-of-contents)
 
 
@@ -257,59 +258,52 @@ The project we based our service on with code and all the deployment scripts can
 
 - **Setup Python environment**
 
-    In order for scripts to work you should have a proper Python environment. If you don't already have it setup then you should follow one of the online tutorials. To setup Python environment and all the dependencies required by CNTK on my local Windows machine, I used [scripted setup tutorial for Windows](https://docs.microsoft.com/en-us/cognitive-toolkit/setup-windows-binary-script). If you're using Linux then you might want to look into one of these [tutorials](https://docs.microsoft.com/en-us/cognitive-toolkit/Setup-CNTK-on-your-machine).
-    Just bear in mind that this project was **developed and tested with CNTK 2.1 and it wasn't tested for any other version**.
+    In order to run scripts from this repo you should have a proper Python environment setup. If you don't want to setup it locally you can use one of the [Data Science Virtual Machine](https://azure.microsoft.com/en-us/services/virtual-machines/data-science-virtual-machines/) images (both on [Linux](https://azuremarketplace.microsoft.com/marketplace/apps/microsoft-ads.linux-data-science-vm-ubuntu) and [Windows](https://azuremarketplace.microsoft.com/marketplace/apps/microsoft-ads.windows-data-science-vm)) on Azure. All of them come in with most popular data science and machine learning tools and frameworks already preinstalled and ready for you.
+
+- **Install dependencies**
+
+    Make sure to install all the dependencies for this project. You can easily do it by using [requirements.txt](requirements.txt) file and running this command:
+
+    ```cmd
+    pip install -r requirements.txt
+    ```
+    Please do report issue if you'll find any errors or missing modules, thanks!
+
+- **Download Endava support tickets dataset (all_tickets.csv)**
+
+    You can download the dataset from [here](https://privdatastorage.blob.core.windows.net/github/support-tickets-classification/datasets/all_tickets.csv) or by executing [1_download_dataset.py](1_download_dataset.py) script. If you decide to download it manually, just make sure to put it under:
+    ```
+    project
+    └───datasets
+        └───all_tickets.csv
+    ```
+    Endavas support tickets dataset is already cleaned and stripped out of any unnecessary words and characters. You can check some of the preprocessing operations that were used in [0_preprocess_data.py](0_preprocess_data.py) script.
+
     
-    Even after setting up Python environment properly you might still witness some errors when running Python scripts. Most of those errors are related to missing modules or some 3rd party frameworks and tools (i.e. [GraphViz](http://www.graphviz.org/)). Missing modules can be easily [pip installed](https://packaging.python.org/tutorials/installing-packages/) and most of the required ones can be found in `requirements.txt` files for each folder with Python scripts.
-
-    Please report if you'll find any errors or missing modules, thanks!
-
-- **Download hotel pictures dataset (HotailorPOC2) and pretrained AlexNet model used for Transfer Learning**
-
-    Go to [Detection/FasterRCNN](Detection/FasterRCNN) folder in the location were you unzipped this repo and run `install_data_and_model.py`. It will automatically download the `HotailorPOC2` dataset, pretrained AlexNet model and will generate mapping files required to train the model.
-    
-### 3.2. Train and evaluate the model
+## 3.2. Train and evaluate the model
 [[back to the top]](#table-of-contents)
 
-After you go through setup steps you can start training your model.
+To train the model you need to run [2_train_and_eval_model.py](2_train_and_eval_model.py) script. There are some parameters you could posibly play around with - check out [code highlights section](#4-code-highlights) for more info.
 
-In order to do it you need to run `FasterRCNN.py`script located in [Detection/FasterRCNN](Detection/FasterRCNN). 
+## 3.3. Deploy web service
+[[back to the top]](#table-of-contents)
 
-I'm working on Windows 10 so I run the script from Anaconda Command Prompt which should be installed during setup steps.
+Inside [webservice](webservice) folder you can find scripts to setup a Python based RESTful web service (made with Flask module).
 
-Bear in mind that training the model might take a lot of time depending on the type of machine you are using for training and if you're using GPU or CPU.
+Deeper in that folder you can also find [download_models.py](webservice/models/download_models.py) script which can be used to download some already trained models that will be used by the web service app.
 
-```
-python FasterRCNN.py
-```
+In order to deploy it to an environment like [Azure App Service](https://azure.microsoft.com/en-us/services/app-service/) you can check [this GitHub repo](https://github.com/karolzak/CNTK-Python-Web-Service-on-Azure) for some inspiration.
 
-**TIP:** If you don't own any machine with heavy GPU you can use one of the ready to go [Data Science Virtual Machine images in Azure](https://azuremarketplace.microsoft.com/en-us/marketplace/apps/microsoft-ads.windows-data-science-vm).
-
-When the training and evaluation will be completed, you should see something similar to this:
-
-```
-Evaluating Faster R-CNN model for 20 images.
-Number of rois before non-maximum suppression: 550
-Number of rois  after non-maximum suppression: 87
-AP for            sink = 0.4429
-AP for          pillow = 0.1358
-AP for          toilet = 0.8095
-AP for            lamp = 0.5404
-AP for         curtain = 0.7183
-AP for           towel = 0.0000
-AP for             tap = 0.1111
-AP for             bed = 0.8333
-Mean AP = 0.4489
-```
-
-Trained model, neural network topology and evaluated images (with plotted results) can later be found in `Output` folder located in `Detection/FasterRCNN`.
-
-<br><br>
+<br>
 
 # 4. Code highlights
 [[back to the top]](#table-of-contents)
 
-- [config.py](Detection/FasterRCNN/config.py) - most of variables are set in this file
+<!--
+
+- [0_preprocess_data.py](2_train_and_eval_model.py) - most of variables are set in this file
+
+- [2_train_and_eval_model.py](2_train_and_eval_model.py) - most of variables are set in this file
 
     - These variables are responsible for chosing a dataset that will be used to train the model. Most important variables here are  :
 
