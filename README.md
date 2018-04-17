@@ -111,125 +111,40 @@ To train models we tested 2 different algorithms: [SVM](http://scikit-learn.org/
 
 Below you can find some of the results of models we trained to predict different properties:
 
-- ### **ticket_type** ###    
+- ### **`ticket_type`** ###    
     We started from predicting the least unbalanced (and most important from Endavas business point of view) parameter which is `ticket_type` and after training the model and finding the best hyperparameters using [GridSearchCV](http://scikit-learn.org/stable/modules/generated/sklearn.model_selection.GridSearchCV.html) (which improved precision and recall by around 4%), we were able to achieve some really good results which you can see below:
 
-<div>
-<div style="float:left"><img src="docs/score_ticket_type.png"></div>
-<div style="float:left">
+    | confusion matrix for `ticket_type` | metrics for `ticket_type` |
+    :-------------------------:|:-------------------------:
+    ![](docs/score_ticket_type.png) | ![](docs/score_ticket_type_acc.png)
 
-<pre>      class  precision    recall  f1-score   support
-
-          0       0.97      0.95      0.96      2747
-          1       0.98      0.99      0.98      6967
-
-avg / total       0.98      0.98      0.98      9714
-
-</pre>
-
-</div>
-<div style="clear:both"/>
-</div>
-
-- ### **business_service** ###
+- ### **`business_service`** ###
 
     `business_service` property is one of the unbalanced features with very low amount of samples/per class for most values.    
     We started from running the training on a subset of our dataset where we removed `business_service` values which were represented by less then 100 samples.    
     Unfortunately that didn't help much and we still had a lot of classes that were not at all recognized. So we continued to increase the minimum required number of samples per class untill we started to see some miningfull results:
 
-<div>
-<div style="float:left"><img src="docs/score_business_service_min1000.png"></div>
-<div style="float:left">
+    
+    | confusion matrix for `business_service` | metrics for `business_service` |
+    :-------------------------:|:-------------------------:
+    ![](docs/score_business_service_min1000.png) | ![](docs/score_business_service_min1000_acc.png)
 
-<pre>      class  precision    recall  f1-score   support
-
-         32       0.66      0.95      0.78      1625
-         36       0.63      0.73      0.68       792
-          4       0.63      0.50      0.56       501
-         40       0.68      0.59      0.63       465
-         46       0.88      0.62      0.73       344
-         51       0.96      0.15      0.25       301
-         56       0.84      0.66      0.74       374
-         63       0.62      0.13      0.21       367
-         66       1.00      0.02      0.04       257
-         67       0.67      0.67      0.67       574
-         68       0.43      0.76      0.55       727
-         70       0.84      0.49      0.62       352
-         73       0.93      0.76      0.84       372
-
-avg / total       0.70      0.65      0.62      7051
-
-</pre>
-</div>
-<div style="clear:both"/>
-</div>
-
-- ### **category | impact | urgency** ###
+- ### **`category`, `impact` and `urgency`** ###
 
     To predict `category`, `impact` and `urgency` we took the same approach as with `business_service` property but results looked even worse. It's obvious that such level of unbalance within the data makes it impossible to create a model with any miningful results.    
     If you would only look at mean/average value of `precision` and `recall` you could wrongly assume that results are quite well but if you would check the values of `support` for each class it would become clear that because one class which covers 70-90% of our data, the results are completely rigged:
-
-<div>
-<div style="float:left"><img src="docs/score_category_min100.png"></div>
-<div style="float:left">
-
-<pre> 'category'  precision    recall  f1-score   support
-
-         11       1.00      0.03      0.06       120
-          3       0.00      0.00      0.00        30
-          4       0.82      0.98      0.89      6820
-          5       0.87      0.65      0.74      1905
-          6       0.65      0.09      0.15       543
-          7       0.00      0.00      0.00       207
-          8       0.95      0.49      0.65        43
-          9       0.00      0.00      0.00        43
-
-avg / total       0.80      0.82      0.79      9711
-
-</pre>
-</div>
-
-<div style="clear:both"/>
-</div>
-
-
-<div>
-<div style="float:left"><img src="docs/score_impact.png"></div>
-<div style="float:left">
-
-<pre>   'impact'  precision    recall  f1-score   support
-
-          0       0.00      0.00      0.00       112
-          1       0.00      0.00      0.00         8
-          2       0.00      0.00      0.00        39
-          3       0.98      1.00      0.99      9578
-
-avg / total       0.97      0.98      0.98      9737
-
-</pre>
-</div>
-<div style="clear:both"/>
-</div>
-
-
-
-<div>
-<div style="float:left"><img src="docs/score_urgency.png"></div>
-<div style="float:left">
-
-<pre>  'urgency'  precision    recall  f1-score   support
-
-          0       0.00      0.00      0.00       335
-          1       0.55      0.18      0.28      1336
-          2       0.85      0.98      0.91      8066
-
-avg / total       0.78      0.84      0.79      9737
-
-</pre>
-</div>
-<div style="clear:both"/>
-</div>
-
+    
+    | confusion matrix for `category` | metrics for `category` |
+    :-------------------------:|:-------------------------:
+    ![](docs/score_category_min100.png) | ![](docs/score_category_min100_acc.png)
+    
+    | confusion matrix for `impact` | metrics for `impact` |
+    :-------------------------:|:-------------------------:
+    ![](docs/score_impact.png) | ![](docs/score_impact_acc.png)
+    
+    | confusion matrix for `urgency` | metrics for `urgency` |
+    :-------------------------:|:-------------------------:
+    ![](docs/score_urgency.png) | ![](docs/score_urgency_acc.png)
 
 
 <br>
@@ -283,7 +198,7 @@ The project we based our service on with code and all the deployment scripts can
 ## 3.2. Train and evaluate the model
 [[back to the top]](#table-of-contents)
 
-To train the model you need to run [2_train_and_eval_model.py](2_train_and_eval_model.py) script. There are some parameters you could posibly play around with - check out [code highlights section](#4-code-highlights) for more info.
+To train the model you need to run [2_train_and_eval_model.py](2_train_and_eval_model.py) script. There are some parameters you could possibly play around with - check out [code highlights section](#4-code-highlights) for more info.
 
 ## 3.3. Deploy web service
 [[back to the top]](#table-of-contents)
@@ -299,84 +214,259 @@ In order to deploy it to an environment like [Azure App Service](https://azure.m
 # 4. Code highlights
 [[back to the top]](#table-of-contents)
 
-<!--
+- [0_preprocess_data.py](0_preprocess_data.py) - collection of scripts we used for data preprocessing and annonymization. I attached it in case someone would be interested in steps we followed with our data
 
-- [0_preprocess_data.py](2_train_and_eval_model.py) - most of variables are set in this file
+    In order to clean our data we removed:
+    - headers and footers
+    - email metadata (like: from, to, cc, date, etc.)
+    - email addresses, phone numbers and urls
+    - image references
+    - blacklisted words (Endavas sensitive information)
+    - non-english words - few percent of emails contained Romanian language
+    - all numerical values
+    - all non-alphabetic characters
+    - whitespaces
 
-- [2_train_and_eval_model.py](2_train_and_eval_model.py) - most of variables are set in this file
-
-    - These variables are responsible for chosing a dataset that will be used to train the model. Most important variables here are  :
-
-        ```Python    
-        __C.CNTK.DATASET = "HotailorPOC2"   
-
-        [..]  
+    In order to annonymize the dataset for publishing purposes we used [sklearn.preprocessing.LabelEncoder](http://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.LabelEncoder.html):
     
-        if __C.CNTK.DATASET == "HotailorPOC2": #name of your dataset Must match the name set with property '__C.CNTK.DATASET'
-            __C.CNTK.MAP_FILE_PATH = "../../DataSets/HotailorPOC2" # dataset directory
-            __C.CNTK.NUM_TRAIN_IMAGES = 82 # number of images in 'positive' folder
-            __C.CNTK.NUM_TEST_IMAGES = 20 # number of images in 'testImages' folder
-            __C.CNTK.PROPOSAL_LAYER_PARAMS = "'feat_stride': 16\n'scales':\n - 4 \n - 8 \n - 12"
+    ```Python    
+    def encryptSingleColumn(data):
+        le = preprocessing.LabelEncoder()
+        le.fit(data)
+        return le.transform(data)
+
+
+    def encryptColumnsCollection(data, columnsToEncrypt):
+        for column in columnsToEncrypt:
+            data[column] = encryptSingleColumn(data[column])
+        return data
+    ```
+
+- [1_download_dataset.py](1_download_dataset.py) - simple script used to download our dataset (already preprocessed, cleaned and annonymized)
+
+- [2_train_and_eval_model.py](2_train_and_eval_model.py) - 
+
+    - `column_to_predict` variable is used to determine which column should be used for classification
+
+        ```Python                
+        column_to_predict = "ticket_type"
+        # Supported datasets:
+        # ticket_type
+        # business_service
+        # category
+        # impact
+        # urgency
+        # sub_category1
+        # sub_category2
         ```
 
-    - `IMAGE_WIDTH` and `IMAGE_HEIGHT` are used to determine the input size of images used for training and later on for evaluation:
-
-        ```Python
-        __C.CNTK.IMAGE_WIDTH = 1000
-        __C.CNTK.IMAGE_HEIGHT = 1000
-        ```
-
-    - `BASE_MODEL` defines which pretrained model should be used for transfer learning. Currently we used only AlexNet. In future we want to test it with VGG16 to check if we can get better results then with AlexNet 
-
-        ```Python
-        __C.CNTK.BASE_MODEL = "AlexNet" # "VGG16" or "AlexNet" or "VGG19"
-        ```
-
-- [requirements.txt](Detection/FasterRCNN/requirements.txt)
-
-    - It holds all the dependencies required by my scripts and CNTK libraries to work. It can be used with `pip install` command to quickly install all the required dependencies ([more here](https://pip.pypa.io/en/stable/user_guide/#requirements-files))
+    - You can play around with some variables in order to improve accuracy:
     
+        ```Python
+        classifier = "NB"  # Supported algorithms: "SVM" and "NB"
+        use_grid_search = False  # grid search is used to find hyperparameters. Searching for hyperparameters is time consuming
+        remove_stop_words = True  # removes stop words from processed text
+        stop_words_lang = 'english'  # used with 'remove_stop_words' and defines language of stop words collection
+        use_stemming = False  # word stemming using nltk
+        fit_prior = True  # if use_stemming == True then it should be set to False ?? double check
+        min_data_per_class = 1  # used to determine number of samples required for each class. Classes with less than that will be excluded from the dataset. Default value is 1
         ```
-        matplotlib==1.5.3
-        numpy==1.13.3
-        cntk==2.1
-        easydict==1.6
-        Pillow==4.3.0
-        utils==0.9.0
-        PyYAML==3.12
-        ```
+    
+    - Loading dataset into [pandas.DataFrame](https://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.html) object:
 
-- [install_data_and_model.py](Detection/FasterRCNN/install_data_and_model.py)
-
-    - This script does 3 things:
-        - Downloads pretrained model specified in [config.py](Detection/FasterRCNN/config.py) which will be later used for transfer learning:
-            
-            ```Python
-            #downloads pretrained model pointed out in config.py that will be used for transfer learning
-            sys.path.append(os.path.join(base_folder, "..", "..",  "PretrainedModels"))
-            from models_util import download_model_by_name
-            download_model_by_name(cfg["CNTK"].BASE_MODEL)
-            ```
+        ```Python                
+        # loading dataset from dprep in Workbench    
+        # dfTickets = package.run('AllTickets.dprep', dataflow_idx=0) 
         
-        - Downloads and unzips our sample HotailorPOC2 dataset:
+        # loading dataset from csv
+        dfTickets = pd.read_csv(
+            './datasets/all_tickets.csv',
+            dtype=str
+        )  
+        ```
+        
+    - Splitting dataset using [sklearn.model_selection.train_test_split](http://scikit-learn.org/stable/modules/generated/sklearn.model_selection.train_test_split.html):
 
-            ```Python
-            #downloads hotel pictures classificator dataset (HotailorPOC2)
-            #comment out lines bellow if you're using a custom dataset
-            sys.path.append(os.path.join(base_folder, "..", "..",  "DataSets", "HotailorPOC2"))
-            from download_HotailorPOC2_dataset import download_dataset
-            download_dataset()    
-            ```
+        ```Python      
+        # Split dataset into training and testing data
+        train_data, test_data, train_labels, test_labels = train_test_split(
+            data, labelData, test_size=0.2
+        )  # split data to train/test sets with 80:20 ratio
+        ```
+        
+    - You can use one of 3 different count vectorizers for features extraction from text:
 
-        - Creates mappings and metadata for dataset:
+        ```Python                
+        # Extracting features from text
+        # Count vectorizer
+        if remove_stop_words:
+            count_vect = CountVectorizer(stop_words=stop_words_lang)
+        elif use_stemming:
+            count_vect = StemmedCountVectorizer(stop_words=stop_words_lang)
+        else:
+            count_vect = CountVectorizer()
+        ```
+        
+    - Creating a [Pipeline](http://scikit-learn.org/stable/modules/generated/sklearn.pipeline.Pipeline.html) to organize transforms and final estimator and fitting the dataset into it:
+
+        ```Python                
+        text_clf = Pipeline([
+            ('vect', count_vect),
+            ('tfidf', TfidfTransformer()),
+            ('clf', MultinomialNB(fit_prior=fit_prior))
+        ])
+        text_clf = text_clf.fit(train_data, train_labels)
+        ```
+
+    - [sklearn.model_selection.GridSearchCV](http://scikit-learn.org/stable/modules/generated/sklearn.model_selection.GridSearchCV.html) can be used to search for best possible set of parameters for the learning algorithm:
+
+        ```Python                
+        if use_grid_search:
+            # Grid Search
+            # Here, we are creating a list of parameters for which we would like to do performance tuning.
+            # All the parameters name start with the classifier name (remember the arbitrary name we gave).
+            # E.g. vect__ngram_range; here we are telling to use unigram and bigrams and choose the one which is optimal.
             
-            ```Python
-            #generates metadata for dataset required by FasterRCNN.py script
-            print("Creating mapping files for data set..")
-            create_mappings(base_folder)
-            ```
+            # NB parameters
+            parameters = {
+                'vect__ngram_range': [(1, 1), (1, 2)],
+                'tfidf__use_idf': (True, False),
+                'clf__alpha': (1e-2, 1e-3)
+            }
 
-- [FasterRCNN.py](Detection/FasterRCNN/FasterRCNN.py)
+            # SVM parameters
+            #    'vect__max_df': (0.5, 0.75, 1.0),
+            #    'vect__max_features': (None, 5000, 10000, 50000),
+            #    'vect__ngram_range': ((1, 1), (1, 2)),  # unigrams or bigrams
+            #    'tfidf__use_idf': (True, False),
+            #    'tfidf__norm': ('l1', 'l2'),
+            #    'clf__alpha': (0.00001, 0.000001),
+            #    'clf__penalty': ('l2', 'elasticnet'),
+            #    'clf__n_iter': (10, 50, 80),
+            # }
 
-    - We use this script for training and testing the model. It makes use of specific variables in [config.py](Detection/FasterRCNN/config.py). This script comes unmodified from original [CNTK repository on GitHub](https://github.com/Microsoft/CNTK) (version 2.1)
+            # Next, we create an instance of the grid search by passing the classifier, parameters
+            # and n_jobs=-1 which tells to use multiple cores from user machine.
+            gs_clf = GridSearchCV(text_clf, parameters, n_jobs=-1)
+            gs_clf = gs_clf.fit(train_data, train_labels)
 
+            # To see the best mean score and the params, run the following code
+            gs_clf.best_score_
+            gs_clf.best_params_
+        ```
+        
+    - Predicting labels for test set, evaluating accuracy of the model (with and without GridSearch) and printing out a simple [confusion matrix](http://scikit-learn.org/stable/modules/generated/sklearn.metrics.confusion_matrix.html):
+
+        ```Python                
+        print("Evaluating model")
+        # Score and evaluate model on test data using model without hyperparameter tuning
+        predicted = text_clf.predict(test_data)
+        prediction_acc = np.mean(predicted == test_labels)
+        print("Confusion matrix without GridSearch:")
+        print(metrics.confusion_matrix(test_labels, predicted))
+        print("Mean without GridSearch: " + str(prediction_acc))
+
+        # Score and evaluate model on test data using model WITH hyperparameter tuning
+        if use_grid_search:
+            predicted = gs_clf.predict(test_data)
+            prediction_acc = np.mean(predicted == test_labels)
+            print("Confusion matrix with GridSearch:")
+            print(metrics.confusion_matrix(test_labels, predicted))
+            print("Mean with GridSearch: " + str(prediction_acc))
+        ```
+        
+    - Plotting confusion matrix using `heatmap` from [seaborn](https://seaborn.pydata.org/generated/seaborn.heatmap.html) module:
+
+        ```Python                
+        # Ploting confusion matrix with 'seaborn' module
+        # Use below line only with Jupyter Notebook
+        # %matplotlib inline
+        import seaborn as sns
+        from sklearn.metrics import confusion_matrix
+        import matplotlib.pyplot as plt
+        import matplotlib
+        mat = confusion_matrix(test_labels, predicted)
+        plt.figure(figsize=(4, 4))
+        sns.set()
+        sns.heatmap(mat.T, square=True, annot=True, fmt='d', cbar=False,
+                    xticklabels=np.unique(test_labels),
+                    yticklabels=np.unique(test_labels))
+        plt.xlabel('true label')
+        plt.ylabel('predicted label')
+        # Save confusion matrix to outputs in Workbench
+        # plt.savefig(os.path.join('.', 'outputs', 'confusion_matrix.png'))
+        plt.show()
+        ```
+
+        Resulting confusion matrix should look similar to this:    
+        ![](docs/score_category_min100.png)        
+        
+    - Printing out [classification report](http://scikit-learn.org/stable/modules/generated/sklearn.metrics.classification_report.html):
+
+        ```Python                
+        # Printing classification report
+        # Use below line only with Jupyter Notebook
+        from sklearn.metrics import classification_report
+        print(classification_report(test_labels, predicted,
+                                    target_names=np.unique(test_labels)))
+        ```
+        
+        Resulting classification report should look similar to this:   
+        ![](docs/score_category_min100_acc.png)
+    
+    - Serializing trained models using [pickle](https://docs.python.org/3/library/pickle.html#module-pickle) module:
+
+        ```Python                
+        # Save trained models to /output folder
+        # Use with Workbench
+        if use_grid_search:
+            pickle.dump(
+                gs_clf,
+                open(os.path.join(
+                    '.', 'outputs', column_to_predict+".model"),
+                    'wb'
+                )
+            )
+        else:
+            pickle.dump(
+                text_clf,
+                open(os.path.join(
+                    '.', 'outputs', column_to_predict+".model"),
+                    'wb'
+                )
+            )
+        ```
+
+- [webservice.py](webservice/webservice.py) - 
+
+    - Loading pretrained models from serialized files using pickle:
+
+        ```Python
+        model_ticket_type = pickle.load(
+            open(
+                os.path.join(__location__, "ticket_type.model"), "rb"
+            )
+        )
+        ```
+
+    - Extracting `description` text from requests json, fitting it into the model to get a prediction and returning the result as json:
+
+        ```Python        
+        @app.route('/endava/api/v1.0/tickettype', methods=['POST'])
+        def tickettype():
+            ts = time.gmtime()
+            logging.info("Request received - %s" % time.strftime("%Y-%m-%d %H:%M:%S", ts))
+            print(request)
+            print(request.json)
+            if not request.json or 'description' not in request.json:
+                abort(400)
+            description = request.json['description']
+            print(description)
+
+            predicted = model_ticket_type.predict([description])
+            print("Predicted: " + str(predicted))
+
+            ts = time.gmtime()
+            logging.info("Request sent to evaluation - %s" % time.strftime("%Y-%m-%d %H:%M:%S", ts))
+            return jsonify({"ticket_type": predicted[0]})
+        ```
