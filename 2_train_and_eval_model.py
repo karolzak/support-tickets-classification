@@ -26,15 +26,15 @@ class StemmedCountVectorizer(CountVectorizer):
         return lambda doc: ([stemmer.stem(w) for w in analyzer(doc)])
 
 
-dataset_name = "ticket_type"
+column_to_predict = "ticket_type"
 # Supported datasets:
-# "ticket_type"
-# "business_service
-# "category
-# "impact"
-# "urgency"
-# "sub_category1
-# "sub_category2
+# ticket_type
+# business_service
+# category
+# impact
+# urgency
+# sub_category1
+# sub_category2
 
 classifier = "NB"  # Supported algorithms # "SVM" # "NB"
 use_grid_search = False  # grid search is used to find hyperparameters. Searching for hyperparameters is time consuming
@@ -47,28 +47,18 @@ min_data_per_class = 1  # used to determine number of samples required for each 
 if __name__ == '__main__':
 
     # TODO Add download dataset
-    # dfTickets = package.run('AllTickets.dprep', dataflow_idx=0)  # loading dataset from dprep in Workbench
+     
+    # loading dataset from dprep in Workbench    
+    # dfTickets = package.run('AllTickets.dprep', dataflow_idx=0) 
+
+    # loading dataset from csv
     dfTickets = pd.read_csv(
         './datasets/all_tickets.csv',
         dtype=str
-    )  # loading dataset from csv
+    )  
 
     text_columns = "body"  # "title" - text columns used for TF-IDF
-    if "business_service" in dataset_name:
-        column_to_predict = "business_service"
-    elif "category" in dataset_name:
-        column_to_predict = "category"
-    elif "sub_category1" in dataset_name:
-        column_to_predict = "sub_category1"
-    elif "sub_category2" in dataset_name:
-        column_to_predict = "sub_category2"
-    elif "impact" in dataset_name:
-        column_to_predict = "impact"
-    elif "urgency" in dataset_name:
-        column_to_predict = "urgency"
-    elif "ticket_type" in dataset_name:
-        column_to_predict = "ticket_type"
-
+    
     # Removing rows related to classes represented by low amount of data
     print("Shape of dataset before removing classes with less then " + str(min_data_per_class) + " rows: "+str(dfTickets.shape))
     print("Number of classes before removing classes with less then " + str(min_data_per_class) + " rows: "+str(len(np.unique(dfTickets[column_to_predict]))))
@@ -135,11 +125,15 @@ if __name__ == '__main__':
         # Here, we are creating a list of parameters for which we would like to do performance tuning.
         # All the parameters name start with the classifier name (remember the arbitrary name we gave).
         # E.g. vect__ngram_range; here we are telling to use unigram and bigrams and choose the one which is optimal.
+        
+        # NB parameters
         parameters = {
             'vect__ngram_range': [(1, 1), (1, 2)],
             'tfidf__use_idf': (True, False),
             'clf__alpha': (1e-2, 1e-3)
         }
+
+        # SVM parameters
         # parameters = {
         #    'vect__max_df': (0.5, 0.75, 1.0),
         #    'vect__max_features': (None, 5000, 10000, 50000),
@@ -197,7 +191,6 @@ if __name__ == '__main__':
 
     # Printing classification report
     # Use below line only with Jupyter Notebook
-    # %matplotlib inline
     from sklearn.metrics import classification_report
     print(classification_report(test_labels, predicted,
                                 target_names=np.unique(test_labels)))
@@ -208,7 +201,7 @@ if __name__ == '__main__':
         pickle.dump(
             gs_clf,
             open(os.path.join(
-                '.', 'outputs', dataset_name+".model"),
+                '.', 'outputs', column_to_predict+".model"),
                 'wb'
             )
         )
@@ -216,7 +209,7 @@ if __name__ == '__main__':
         pickle.dump(
             text_clf,
             open(os.path.join(
-                '.', 'outputs', dataset_name+".model"),
+                '.', 'outputs', column_to_predict+".model"),
                 'wb'
             )
         )
