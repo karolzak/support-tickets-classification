@@ -25,8 +25,8 @@ __location__ = os.path.realpath(os.path.join(
     os.getcwd(), os.path.dirname(__file__), 'models'))
 
 # Download models
-# from download_models import download_file, download_models
-# download_models()
+from models.download_models import download_file, download_models
+download_models()
 
 # Loading models
 model_impact = pickle.load(
