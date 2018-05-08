@@ -101,7 +101,7 @@ ENV/
 .mypy_cache/
 
 # excluding datasets and models
-*.csv
+all_tickets.csv
 *.model
 .vscode
 
