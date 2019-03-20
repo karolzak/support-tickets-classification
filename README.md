@@ -53,7 +53,7 @@ In this repository we will focus only on AML Workbench and Python scripts used t
 [[back to the top]](#table-of-contents)
 
 ***Disclaimer:***
-*This POC and all the learnings you can find bellow is an outcome of close cooperation between Microsoft and [Endava](http://endava.com/en). Our combined team spent total of 3 days in order to solve a challenge of automatic support tickets classification.*
+*This POC and all the learnings you can find below is an outcome of close cooperation between Microsoft and [Endava](http://endava.com/en). Our combined team spent total of 3 days in order to solve a challenge of automatic support tickets classification.*
 
 
 ## 2.1. Main challenge and initial assumptions ##
@@ -61,7 +61,7 @@ In this repository we will focus only on AML Workbench and Python scripts used t
 
 - Main challenge we tried to solve was to create a model for automatic support tickets classification for Endavas helpdesk solution. As Endava stated: currently helpdesk operators waste a lot of time evaluating tickets and trying to assign values to properties like: `ticket_type, urgency, impact, category, etc.` for each submitted ticket
 - The dataset we used is Endavas internal data imported from their helpdesk system. We were able to collect around 50k classified support tickets with original messages from users and already assigned labels
-- In our POC we focused only on tickets submited in form of an email, similar to the one bellow:
+- In our POC we focused only on tickets submited in form of an email, similar to the one below:
 ![](docs/sample_email.jpg)
 
 <br>
@@ -74,10 +74,10 @@ In this repository we will focus only on AML Workbench and Python scripts used t
 - Example of anonymized and preprocessed data from [AML Workbench](https://docs.microsoft.com/en-us/azure/machine-learning/preview/quickstart-installation) view:  
 ![](docs/sample_data.jpg)
 
-- AML Workbench gives some [powerfull and easy to use tools for data preparation](https://docs.microsoft.com/en-us/azure/machine-learning/preview/tutorial-bikeshare-dataprep). And bellow you can see a sample data transformation flow we used while preparing our dataset:  
+- AML Workbench gives some [powerfull and easy to use tools for data preparation](https://docs.microsoft.com/en-us/azure/machine-learning/preview/tutorial-bikeshare-dataprep). And below you can see a sample data transformation flow we used while preparing our dataset:  
 ![](docs/data_steps.jpg)
 
-- After evaluating the data in AML Workbench we quickly discovered that distribution of values for most of columns we wanted to classify is strongly unbalanced with some of the unique values represented by even as low as 1-2 samples. There are [multiple technics](https://shiring.github.io/machine_learning/2017/04/02/unbalanced) to deal with that kind of issues but due to limited amount of time for this POC we were not able to test them in action.   
+- After evaluating the data in AML Workbench we quickly discovered that distribution of values for most of columns we wanted to classify is strongly unbalanced with some of the unique values represented by even as low as 1-2 samples. There are [multiple techniques](https://shiring.github.io/machine_learning/2017/04/02/unbalanced) to deal with that kind of issues but due to limited amount of time for this POC we were not able to test them in action.   
 
 - Distribution of values for each column:  
 
@@ -122,7 +122,7 @@ Below you can find some of the results of models we trained to predict different
 
     `business_service` property is one of the unbalanced features with very low amount of samples/per class for most values.    
     We started from running the training on a subset of our dataset where we removed `business_service` values which were represented by less then 100 samples.    
-    Unfortunately that didn't help much and we still had a lot of classes that were not at all recognized. So we continued to increase the minimum required number of samples per class untill we started to see some miningfull results:
+    Unfortunately that didn't help much and we still had a lot of classes that were not at all recognized. So we continued to increase the minimum required number of samples per class untill we started to see some meaningful results:
 
     
     | confusion matrix for `business_service` | metrics for `business_service` |
@@ -131,7 +131,7 @@ Below you can find some of the results of models we trained to predict different
 
 - ### **`category`, `impact` and `urgency`** ###
 
-    To predict `category`, `impact` and `urgency` we took the same approach as with `business_service` property but results looked even worse. It's obvious that such level of unbalance within the data makes it impossible to create a model with any miningful results.    
+    To predict `category`, `impact` and `urgency` we took the same approach as with `business_service` property but results looked even worse. It's obvious that such level of unbalance within the data makes it impossible to create a model with any meaningful results.    
     If you would only look at mean/average value of `precision` and `recall` you could wrongly assume that results are quite well but if you would check the values of `support` for each class it would become clear that because one class which covers 70-90% of our data, the results are completely rigged:
     
     | confusion matrix for `category` | metrics for `category` |
@@ -182,7 +182,7 @@ The project we based our service on with code and all the deployment scripts can
     ```cmd
     pip install -r requirements.txt
     ```
-    Please do report issue if you'll find any errors or missing modules, thanks!
+    Please report issues if you find any errors or missing modules, thanks!
 
 - **Download Endava support tickets dataset (all_tickets.csv)**
 
@@ -214,7 +214,7 @@ In order to deploy it to an environment like [Azure App Service](https://azure.m
 # 4. Code highlights
 [[back to the top]](#table-of-contents)
 
-- [0_preprocess_data.py](0_preprocess_data.py) - collection of scripts we used for data preprocessing and annonymization. I attached it in case someone would be interested in steps we followed with our data
+- [0_preprocess_data.py](0_preprocess_data.py) - collection of scripts we used for data preprocessing and anonymization. I attached it in case someone would be interested in steps we followed with our data
 
     In order to clean our data we removed:
     - headers and footers
@@ -227,7 +227,7 @@ In order to deploy it to an environment like [Azure App Service](https://azure.m
     - all non-alphabetic characters
     - whitespaces
 
-    In order to annonymize the dataset for publishing purposes we used [sklearn.preprocessing.LabelEncoder](http://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.LabelEncoder.html):
+    In order to anonymize the dataset for publishing purposes we used [sklearn.preprocessing.LabelEncoder](http://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.LabelEncoder.html):
     
     ```Python    
     def encryptSingleColumn(data):
@@ -242,7 +242,7 @@ In order to deploy it to an environment like [Azure App Service](https://azure.m
         return data
     ```
 
-- [1_download_dataset.py](1_download_dataset.py) - simple script used to download our dataset (already preprocessed, cleaned and annonymized)
+- [1_download_dataset.py](1_download_dataset.py) - simple script used to download our dataset (already preprocessed, cleaned and anonymized)
 
 - [2_train_and_eval_model.py](2_train_and_eval_model.py) - 
 
