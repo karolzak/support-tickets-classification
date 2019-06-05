@@ -23,7 +23,6 @@ Our combined team tried 3 different approaches to tackle this challenge using:
 - [Microsoft Cognitive Toolkit (CNTK)](https://github.com/Microsoft/CNTK) - deep neural networks framework
 - [Azure Machine Learning service](https://docs.microsoft.com/azure/machine-learning/service) - with Python and classic machine learning algorithms
 
-In this repository we will focus only on AML Workbench and Python scripts used to solve this challenge.
 
 
 #### What will you find inside:     #### 
@@ -77,10 +76,10 @@ In this repository we will focus only on AML Workbench and Python scripts used t
   >[!Important]
   >[Azure Machine Learning service](https://docs.microsoft.com/azure/machine-learning/service) no longer supports the deprecated Workbench tool.
 
-- AML Workbench gives some [powerfull and easy to use tools for data preparation](https://docs.microsoft.com/en-us/azure/machine-learning/preview/tutorial-bikeshare-dataprep). And below you can see a sample data transformation flow we used while preparing our dataset:  
+- Below you can see a sample data transformation flow we used while preparing our dataset:  
 ![](docs/data_steps.jpg)
 
-- After evaluating the data in AML Workbench we quickly discovered that distribution of values for most of columns we wanted to classify is strongly unbalanced with some of the unique values represented by even as low as 1-2 samples. There are [multiple techniques](https://shiring.github.io/machine_learning/2017/04/02/unbalanced) to deal with that kind of issues but due to limited amount of time for this POC we were not able to test them in action.   
+- After evaluating the data we quickly discovered that distribution of values for most of columns we wanted to classify is strongly unbalanced with some of the unique values represented by even as low as 1-2 samples. There are [multiple techniques](https://shiring.github.io/machine_learning/2017/04/02/unbalanced) to deal with that kind of issues but due to limited amount of time for this POC we were not able to test them in action.   
 
 - Distribution of values for each column:  
 
@@ -106,7 +105,7 @@ In this repository we will focus only on AML Workbench and Python scripts used t
 ## 2.3. Training and evaluation results ##
 [[back to the top]](#table-of-contents)
 
-In order to train our models, we used [AML Workbench](https://docs.microsoft.com/en-us/azure/machine-learning/preview/quickstart-installation) and [Azure Machine Learning Services](https://azure.microsoft.com/en-us/services/machine-learning-services/) to run training jobs with different parameters and then compare the results and pick up the one with the best values.:
+In order to train our models, we used [Azure Machine Learning Services](https://azure.microsoft.com/en-us/services/machine-learning-services/) to run training jobs with different parameters and then compare the results and pick up the one with the best values.:
 
 ![](docs/workbench_runs_1.jpg)
 
@@ -278,7 +277,7 @@ In order to deploy it to an environment like [Azure App Service](https://azure.m
     - Loading dataset into [pandas.DataFrame](https://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.html) object:
 
         ```Python                
-        # loading dataset from dprep in Workbench    
+            
         # dfTickets = package.run('AllTickets.dprep', dataflow_idx=0) 
         
         # loading dataset from csv
@@ -396,7 +395,7 @@ In order to deploy it to an environment like [Azure App Service](https://azure.m
                     yticklabels=np.unique(test_labels))
         plt.xlabel('true label')
         plt.ylabel('predicted label')
-        # Save confusion matrix to outputs in Workbench
+        # Save confusion matrix
         # plt.savefig(os.path.join('.', 'outputs', 'confusion_matrix.png'))
         plt.show()
         ```
@@ -421,7 +420,6 @@ In order to deploy it to an environment like [Azure App Service](https://azure.m
 
         ```Python                
         # Save trained models to /output folder
-        # Use with Workbench
         if use_grid_search:
             pickle.dump(
                 gs_clf,
