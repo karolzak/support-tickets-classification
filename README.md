@@ -74,6 +74,9 @@ In this repository we will focus only on AML Workbench and Python scripts used t
 - Example of anonymized and preprocessed data from [AML Workbench](https://docs.microsoft.com/en-us/azure/machine-learning/preview/quickstart-installation) view:  
 ![](docs/sample_data.jpg)
 
+  >[!Important]
+  >[Azure Machine Learning service](https://docs.microsoft.com/azure/machine-learning/service) no longer supports the deprecated Workbench tool.
+
 - AML Workbench gives some [powerfull and easy to use tools for data preparation](https://docs.microsoft.com/en-us/azure/machine-learning/preview/tutorial-bikeshare-dataprep). And below you can see a sample data transformation flow we used while preparing our dataset:  
 ![](docs/data_steps.jpg)
 
