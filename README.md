@@ -21,7 +21,7 @@ This project is a proof of concept made by Microsoft (Commercial Software Engine
 Our combined team tried 3 different approaches to tackle this challenge using:
 - [Azure Machine Learning Studio](https://studio.azureml.net/) - drag-and-drop machine learning tools
 - [Microsoft Cognitive Toolkit (CNTK)](https://github.com/Microsoft/CNTK) - deep neural networks framework
-- [Azure Machine Learning Workbench](https://docs.microsoft.com/en-us/azure/machine-learning/preview/quickstart-installation) - with Python and classic machine learning algorithms
+- [Azure Machine Learning service](https://docs.microsoft.com/azure/machine-learning/service) - with Python and classic machine learning algorithms
 
 In this repository we will focus only on AML Workbench and Python scripts used to solve this challenge.
 
@@ -31,7 +31,7 @@ In this repository we will focus only on AML Workbench and Python scripts used t
 - How to strip the data from any sensitive information and also anonymize/encrypt it
 - How to create a classification model using Python modules like: [sklearn](http://scikit-learn.org/stable/), [nltk](https://www.nltk.org/), [matplotlib](https://matplotlib.org/), [pandas](https://pandas.pydata.org/)
 - How to create a web service with a trained model and deploy it to Azure
-- How to leverage [Azure Machine Learning Services](https://azure.microsoft.com/en-us/services/machine-learning-services/) and [AML Workbench](https://docs.microsoft.com/en-us/azure/machine-learning/preview/quickstart-installation) to make working on ML projects easier, faster and much more efficient
+- How to leverage [Azure Machine Learning Service](https://azure.microsoft.com/en-us/services/machine-learning-services/) to make working on ML projects easier, faster and much more efficient
 
 
 #### The team: ####
