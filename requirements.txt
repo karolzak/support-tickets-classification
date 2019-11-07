@@ -3,7 +3,7 @@ pandas==0.19.2
 scipy==1.0.0
 requests==2.18.4
 numpy==1.13.3
-Flask==0.12.2
+Flask==1.0
 matplotlib==2.1.0
 future==0.16.0
 azure_ml_api_sdk==0.1.0a11
