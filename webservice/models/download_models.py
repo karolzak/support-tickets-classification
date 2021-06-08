@@ -21,8 +21,9 @@ def download_models():
     file_list = ['category.model', 'impact.model', 'ticket_type.model']
     folder_path = os.path.dirname(os.path.abspath(__file__))
     url = "https://privdatastorage.blob.core.windows.net/github/support-tickets-classification/models/"
+    sas = "?sp=r&st=2021-06-08T08:50:24Z&se=2022-12-31T17:50:24Z&spr=https&sv=2020-02-10&sr=c&sig=4z4Qa3PL2U%2B6TQiNgkU1MF%2BUiNCcvCbvgGXeLBW9LLg%3D"
     for file_name in file_list:
-        download_file(url + file_name, folder_path, file_name)
+        download_file(url + file_name + sas, folder_path, file_name)
 
 
 if __name__ == "__main__":

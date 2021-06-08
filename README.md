@@ -68,7 +68,7 @@ Our combined team tried 3 different approaches to tackle this challenge using:
 ## 2.2. Dataset ##    
 [[back to the top]](#table-of-contents)
 
-- For the sake of this repository, data have been stripped out of any sensitive information and anonymized (encrypted). In the original solution we worked on a full dataset without any encryptions. You can download anonymized dataset from [here](https://privdatastorage.blob.core.windows.net/github/support-tickets-classification/datasets/all_tickets.csv).
+- For the sake of this repository, data have been stripped out of any sensitive information and anonymized (encrypted). In the original solution we worked on a full dataset without any encryptions. You can download anonymized dataset from [here](https://privdatastorage.blob.core.windows.net/github/support-tickets-classification/datasets/all_tickets.csv?sp=r&st=2021-06-07T14:36:30Z&se=2022-12-30T23:36:30Z&spr=https&sv=2020-02-10&sr=b&sig=Za0%2Fgbe%2FanVblbcYsCdQS5zTS5%2B17QKESzlbEXPp2KE%3D).
 
 - Example of anonymized and preprocessed data from [AML Workbench](https://docs.microsoft.com/en-us/azure/machine-learning/preview/quickstart-installation) view:  
 ![](docs/sample_data.jpg)
@@ -188,7 +188,7 @@ The project we based our service on with code and all the deployment scripts can
 
 - **Download Endava support tickets dataset (all_tickets.csv)**
 
-    You can download the dataset from [here](https://privdatastorage.blob.core.windows.net/github/support-tickets-classification/datasets/all_tickets.csv) or by executing [1_download_dataset.py](1_download_dataset.py) script. If you decide to download it manually, just make sure to put it under:
+    You can download the dataset from [here](https://privdatastorage.blob.core.windows.net/github/support-tickets-classification/datasets/all_tickets.csv?sp=r&st=2021-06-07T14:36:30Z&se=2022-12-30T23:36:30Z&spr=https&sv=2020-02-10&sr=b&sig=Za0%2Fgbe%2FanVblbcYsCdQS5zTS5%2B17QKESzlbEXPp2KE%3D) or by executing [1_download_dataset.py](1_download_dataset.py) script. If you decide to download it manually, just make sure to put it under:
     ```
     project
     └───datasets
