@@ -25,7 +25,7 @@ def download_dataset():
         ),
         'datasets'
     )
-    url = "https://privdatastorage.blob.core.windows.net/github/support-tickets-classification/datasets/all_tickets.csv"
+    url = "https://privdatastorage.blob.core.windows.net/github/support-tickets-classification/datasets/all_tickets.csv?sp=r&st=2021-06-07T14:36:30Z&se=2022-12-30T23:36:30Z&spr=https&sv=2020-02-10&sr=b&sig=Za0%2Fgbe%2FanVblbcYsCdQS5zTS5%2B17QKESzlbEXPp2KE%3D"
     file_name = 'all_tickets.csv'
     download_file(url, folder_path, file_name)
 
